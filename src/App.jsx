@@ -9,9 +9,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" />
-        <Route path="/products" />
-        <Route path="/men" />
-        <Route path="/women" />        
+        <Route path="/products" />     
         <Route path="/about" />
         <Route path="/contact" />
       </Routes>
