@@ -1,6 +1,6 @@
 import { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 import Logo from "../assets/logo.svg";
 import CartLogo from "../assets/icon-cart.svg"
 import AvatarImage from "../assets/image-avatar.png"
@@ -102,7 +102,7 @@ const S = {
         @media (min-width: 761px){
             display: none;
         }
-    `,
+    `,    
     NavbarExtendedContainer : styled.div`
         display: flex;
         flex-direction: column;
@@ -136,18 +136,26 @@ function Navbar() {
     const [extendNavbar, setExtendNavbar] = useState(false);
     const [cartButton, setCartButton] = useState(false);
     console.log(extendNavbar);
-    console.log(cartButton);
+    console.log(cartButton);  
 
+    const handleToggleNavbar = () => {
+        if (!extendNavbar) {
+            setCartButton(false);
+        }
+        setExtendNavbar(!extendNavbar);
+    };
+
+    const handleToggleCart = () => {
+        if (!cartButton) {
+            setExtendNavbar(false);
+        }
+        setCartButton(!cartButton);
+    };
 
     return <S.NavbarContainer extendNavbar={extendNavbar}>
         <S.NavbarInnerContainer>
             <S.LeftContainer>
-                <S.OpenLinkButton onClick={() => {
-                    if(extendNavbar === false) {
-                        setCartButton(false);
-                    }
-                    setExtendNavbar(!extendNavbar);
-                }}>{extendNavbar ? <> &#10005;</> : <>&#8801;</>}</S.OpenLinkButton>
+                <S.OpenLinkButton onClick={handleToggleNavbar}>{extendNavbar ? <> &#10005;</> : <>&#8801;</>}</S.OpenLinkButton>
                 <S.NavbarLogo src={Logo}></S.NavbarLogo>
                 <S.NavbarLinkContainer>
                     <S.NavbarLink to="/">Home</S.NavbarLink>
@@ -157,30 +165,23 @@ function Navbar() {
                 </S.NavbarLinkContainer>                 
             </S.LeftContainer>
             <S.RightContainer>
-                <S.CartButton onClick={() => {
-                    if(cartButton === false) {
-                        setExtendNavbar(false);
-                    }
-                    setCartButton(!cartButton);
-                }}><S.CartLogo src={CartLogo}></S.CartLogo></S.CartButton>
+                <S.CartButton onClick={handleToggleCart}><S.CartLogo src={CartLogo}></S.CartLogo></S.CartButton>
                 <S.Avatar src={AvatarImage}></S.Avatar>
             </S.RightContainer>
         </S.NavbarInnerContainer>
 
-        { extendNavbar && (
-            <S.NavbarExtendedContainer>            
-                <S.NavbarExtendedLinkContainer>
-                    <S.NavbarLinkExtended to="/">Home</S.NavbarLinkExtended>
-                    <S.NavbarLinkExtended to="/products">Products</S.NavbarLinkExtended>
-                    <S.NavbarLinkExtended to="/about">About</S.NavbarLinkExtended>
-                    <S.NavbarLinkExtended to="/contact">Contact</S.NavbarLinkExtended>
-                </S.NavbarExtendedLinkContainer>   
-            </S.NavbarExtendedContainer>
-        )}
+        {extendNavbar && (<S.NavbarExtendedContainer>            
+            <S.NavbarExtendedLinkContainer>
+                <S.NavbarLinkExtended to="/">Home</S.NavbarLinkExtended>
+                <S.NavbarLinkExtended to="/products">Products</S.NavbarLinkExtended>
+                <S.NavbarLinkExtended to="/about">About</S.NavbarLinkExtended>
+                <S.NavbarLinkExtended to="/contact">Contact</S.NavbarLinkExtended>
+            </S.NavbarExtendedLinkContainer>   
+        </S.NavbarExtendedContainer>)}     
 
-        { cartButton && (
+        {/* { cartButton && (
             <S.CartItems>Cart Items</S.CartItems>
-        )}
+        )}  */}
         
 
     </S.NavbarContainer>
